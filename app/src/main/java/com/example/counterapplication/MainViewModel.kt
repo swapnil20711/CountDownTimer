@@ -7,9 +7,9 @@ import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
     private val _seconds = MutableLiveData<Int>()
-    val finished = MutableLiveData(false)
+    var finished = MutableLiveData(false)
     var startTime = MutableLiveData<Long>()
-    var countDownTimer: CountDownTimer? = null
+    private var countDownTimer: CountDownTimer? = null
 
     fun startTimer() {
         countDownTimer = object : CountDownTimer(startTime.value!!.toLong(), 1000) {
@@ -28,8 +28,13 @@ class MainViewModel : ViewModel() {
     fun getSeconds(): LiveData<Int> {
         return _seconds
     }
-    fun stopTimer(){
+
+    fun stopTimer() {
+        _seconds.value = 0
         countDownTimer?.cancel()
+    }
+    fun getCountDownTimer():CountDownTimer?{
+        return countDownTimer
     }
 
 }

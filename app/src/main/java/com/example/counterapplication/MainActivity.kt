@@ -56,7 +56,7 @@ fun Counter() {
     var state by rememberSaveable {
         mutableStateOf(0)
     }
-    var mainViewModel: MainViewModel = viewModel()
+    val mainViewModel: MainViewModel = viewModel()
     mainViewModel.getSeconds().observe(LocalLifecycleOwner.current) {
         state = it
     }
@@ -78,8 +78,8 @@ fun Counter() {
                 text = it
             })
         Button(modifier = Modifier.padding(4.dp), onClick = {
-            if (mainViewModel.countDownTimer != null) {
-                mainViewModel.countDownTimer?.cancel()
+            if (mainViewModel.getCountDownTimer() != null) {
+                mainViewModel.getCountDownTimer()?.cancel()
             }
             if (!text.isNullOrEmpty()) {
                 mainViewModel.startTime.value = text.toLong()
